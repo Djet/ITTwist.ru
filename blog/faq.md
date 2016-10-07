@@ -3,6 +3,7 @@ title: FAQ по командам Unix
 date: 07/10/16 18:14:20
 template: blog_post
 ---
+<!--more-->
 
 1) Ошибка в puppet:  undefined method `empty?' for nil:NilClass
 
