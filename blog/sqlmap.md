@@ -21,7 +21,15 @@ SQLMAP - Это open source инструмент для автоматическ
 ```
 
 Разберем каталоги из которых состоит sqlmap:
-```table
+
+| Option | Description |  
+| ------ | ----------- |  
+| data   | path to data files to supply the data that will be passed into templates. |  
+| engine | engine to be used for processing templates. Handlebars is the default. |   
+| ext    | extension to be used for dest files. |
+
+
+
 | doc/ | - каталог с документацией по использованию sqlmap, cодержит: faq, readme | 
 | extra/ | - содержит различные расширения такие как: |
 | beep.py | - создает beep звук |
@@ -29,7 +37,7 @@ SQLMAP - Это open source инструмент для автоматическ
 | dbgtool.py | - утилита для преобразования MS-DOS исполняемого файла в ASCII текст, обратно собрать в исполняемый файл на Windows можно с помощью debug.exe который присутствует во всех версия Windows |
 | icmpsh.py | - простой shell через icmp |
 | mssqlsig/update.py | - обновление MS SQL сигнатур |
-```
+
 runcmd/ - в этом каталоге содержатся файлы которые могут быть использованы для запуска командной строки cmd для windows
 safe2bin.py - декодер текста в бинарный файл
 shellcodeexec/ - файлы в этом каталоге содержат исполняемы файлы shell для linux и windows
