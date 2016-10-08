@@ -63,14 +63,14 @@ tshark -iany -f 'port 80 and host 172.16.100.8' -l -t ad -n -R 'http.request' -T
 ```
 
  
-####Посмотреть статистику по использованию CPU за день, она собирается в debian по умолчанию каждые 10 минут командой atsa и складывается в бинарный лог. С сортировкой по первому load average.
+###Посмотреть статистику по использованию CPU за день, она собирается в debian по умолчанию каждые 10 минут командой atsa и складывается в бинарный лог. С сортировкой по первому load average.
 
 ```sh
 sar -P -f /var/log/atsar/atsa01 | tr -s ' ' | sort -t' ' -k5,5
 ```
 
 
-####Проверить http сайт по telnet:
+###Проверить http сайт по telnet:
 ```sh
 telnet host 80
 GET /index.htm HTTP/1.1
@@ -78,13 +78,12 @@ host: www.esqsoft.globalservers.com
 ```
 
 
-####Скукожить повторяющиеся пробелы до одного пробела  (параметр sqeeeze у tr):
+###Скукожить повторяющиеся пробелы до одного пробела  (параметр sqeeeze у tr):
 ```sh
 ipmitool -I lanplus -H 91.143.6.178 -U ipmi -P w**** sensor | grep "Ambient Temp" | tr -s ' ' | cut -d' ' -f 4
 ```
 
-
-####Узнать внешний ip адрес:
+###Узнать внешний ip адрес:
 ```sh
 wget -q -O - http://formyip.com/ | awk '/The/{print $5}'
 ```
