@@ -175,6 +175,7 @@ nc -znvvw 3 10.1.1.1 80
 ```sh
 nc -znvvw 3 10.1.1.1 8080-8081
 ```
+
 ###Из какого пакета файл:
 ```sh 
 root@brownie:# dpkg -S /etc/hdparm.conf
