@@ -18,43 +18,6 @@ ipsec-gw.a1s#sh ip arp | i 172.16.100.74
 ipsec-gw.a1s#clear arp-cache 172.16.100.6
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ####cd !!:2 или перейтив созданный каталог:
 ```sh
 $ mkdir -p /tmp/dev/deb/guake
