@@ -7,10 +7,11 @@ template: blog_post
 На этой странице собраны полезные для меня Unix комманды и решения некоторых проблем.
 
 
-Q: Ошибка в puppet:  undefined method `empty?' for nil:NilClass
-R: Необходимо проверить  стоит ли пробел перед названием клаcа в hiera файле
+> Ошибка в puppet:  undefined method `empty?' for nil:NilClass
 
-Q: Отчистить MAC адрес на CISCO ( Если после добавления dev интерфейса на OpenVZ прободают контейнеры )
+Необходимо проверить  стоит ли пробел перед названием клаcа в hiera файле
+
+> Отчистить MAC адрес на CISCO ( Если после добавления dev интерфейса на OpenVZ прободают контейнеры )
 R:
 ```sh
 ipsec-gw.a1s#sh ip arp | i 172.16.100.74
