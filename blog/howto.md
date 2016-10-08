@@ -14,8 +14,8 @@ template: blog_post
 
 ###Отчистить MAC адрес на CISCO ( Если после добавления dev интерфейса на OpenVZ прободают контейнеры ):
 ```sh
-ipsec-gw.a1s#sh ip arp | i 172.16.100.74
-ipsec-gw.a1s#clear arp-cache 172.16.100.6
+ipsec-gw#sh ip arp | i 172.16.0.74
+ipsec-gw#clear arp-cache 172.16.0.6
 ```
 
 ###cd !!:2 или перейти в созданный каталог:
@@ -28,8 +28,8 @@ $ cd !!:2
 ###Расширение раздела LVM:
 
 ```sh
-$ lvextend -l +100%FREE /dev/mapper/a1s16-root
-$ resize2fs /dev/mapper/a1s16-root
+$ lvextend -l +100%FREE /dev/mapper/a16-root
+$ resize2fs /dev/mapper/a16-root
 ```
 
 
@@ -59,7 +59,7 @@ R32kLJ4IZ6DO5DJXc9f1jircPXxul0167C8u/g6ShGGDE27FJ31Y09yeB9jrRYjD
 ###Просмотреть http трафик с выводом запроса и хоста:
 
 ```sh
-tshark -iany -f 'port 80 and host 172.16.100.8' -l -t ad -n -R 'http.request' -T fields -e http.host -e http.request.uri
+tshark -iany -f 'port 80 and host 172.16.0.8' -l -t ad -n -R 'http.request' -T fields -e http.host -e http.request.uri
 ```
 
  
@@ -267,7 +267,7 @@ grep [1-3] test.txt
 ###Передача интерактивных команд по telnet/ssh:
 
 ```sh
-(echo "sh run"; sleep 3; exit;) | ssh admin@172.16.100.111
+(echo "sh run"; sleep 3; exit;) | ssh admin@172.16.0.111
 ```
 
 ###Монтирование всех разделов для полноценного chroot (после этого в chroot можно запускать сервисы):
@@ -318,11 +318,11 @@ ping 10.78.2.228 source 10.241.0.2
 
 ```sh
 $ createuser -P -e --createdb --encrypted --login --createrole -p 5430 tcp_test
-CREATE ROLE tcp_test ENCRYPTED PASSWORD 'md548a6f317b149ccc0f096aa16c4871bc9' NOSUPERUSER CREATEDB CREATEROLE INHERIT LOGIN;
+CREATE ROLE tcp_test ENCRYPTED PASSWORD 'md548a6f317b149ccc0sdfa16c4871bc9' NOSUPERUSER CREATEDB CREATEROLE INHERIT LOGIN;
 ```
 ещё способ:
 ```sh
-CREATE USER nagios WITH PASSWORD 'Na23iOs175';
+CREATE USER nagios WITH PASSWORD 'password';
 GRANT ALL PRIVILEGES ON DATABASE template0 to nagios;
 ```
 
@@ -478,13 +478,13 @@ ssh -R 80:ya.ru:80 root@a25
 Воспользуемся oab скриптом (параметр -7 означает поставить java7):
 
 ```sh
-root@trn4:~# wget https://github.com/flexiondotorg/oab-java6/archive/master.zip
-root@trn4:~# unzip master.zip
-root@trn4:~# cd oab-java6-master/
-root@trn4:~/oab-java6-master# ./oab-java.sh -7
-root@trn4:/# apt-get update
-root@trn4:/# apt-get install oracle-java7-jre
-root@trn4:/# sudo update-alternatives --config java
+root@t4:~# wget https://github.com/flexiondotorg/oab-java6/archive/master.zip
+root@t4:~# unzip master.zip
+root@t4:~# cd oab-java6-master/
+root@t4:~/oab-java6-master# ./oab-java.sh -7
+root@t4:/# apt-get update
+root@t4:/# apt-get install oracle-java7-jre
+root@t4:/# sudo update-alternatives --config java
 There are 2 choices for the alternative java (providing /usr/bin/java).
  
   Selection    Path                                      Priority   Status
@@ -508,8 +508,88 @@ mysql> show create database smpp_router;
 +-------------+----------------------------------------------------------------------+
 1 row in set (0.00 sec)
  
-root@java2:~# mysqldump -d smpp_router > ~/smpp_router_dump_19_03_2013_schema_only.sql
-root@java2:~# scp ~/smpp_router_dump_19_03_2013_schema_only.sql smstrn4.a1s:~/
+root@j2:~# mysqldump -d router > ~/smpp_router_dump_19_03_2013_schema_only.sql
+root@j2:~# scp ~/router_dump_19_03_2013_schema_only.sql t4:~/
+```
+###Восстановление схемы (на сервере куда восстанавливаем):
+```sh
+mysql> CREATE USER "router"@"%" IDENTIFIED BY '****';
+mysql> CREATE DATABASE `router` /*!40100 DEFAULT CHARACTER SET utf8 */
+mysql> GRANT ALL PRIVILEGES ON smpp_router.* TO "router"@"%" WITH GRANT OPTION;
+mysql> flush privileges;
+ 
+root@smstrn4:~# mysql -u router -p router < ~/router_dump_19_03_2013_schema_only.sql
+```
+
+###Поменять активный интерфейс в бондинге (в данном примере на eth0):
+```sh
+ifenslave -c bond0 eth0
+```
+
+###Сравнение двух баз данных Mysql с помощью утилиты pt-table-checksum (пример java3 java2)
+
+На мастере нужно добавить пользователя
+
+```sh
+GRANT ALL PRIVILEGES ON *.* TO 'pt_chtables'@'172.16.0.54' IDENTIFIED BY PASSWORD 'password';
+GRANT ALL PRIVILEGES ON `lite_demo`.* TO 'pt_chtables'@'172.16.0.54';
+GRANT ALL PRIVILEGES ON `lite`.* TO 'pt_chtables'@'172.16.0.54';
+
+на слейве запустить команду:
+```sh
+pt-table-checksum --databases=lite_icb h=java3,u=pt_chtables,p=SdwCweCS
+```
+ 
+###Сортировка файлов по их числовому возрастанию
+```sh
+webhost:/var/log/nginx# ls  | sort -t '.' -nk 4 | grep archipelag.error
+```
+###crm_report - генерация отчетов о работе кластера за определенное время:
+```sh
+crm_report -C -f "2014-05-14 13:05:00"
+```
+
+###Способ ловить kernel panic:
+
+1. Должен быть подключен модуль NETCONSOLE
+```sh 
+root@sc2:/# cat /boot/config-2.6.32-5-amd64|grep NETCONSOLE
+CONFIG_NETCONSOLE=m
+CONFIG_NETCONSOLE_DYNAMIC=y
+```
+
+2. Запускаем отсылку командой
+```sh 
+root@s2:/home/djet# modprobe netconsole netconsole=6969@10.90.30.130/eth0,6969@10.90.30.129/5c:f3:fc:b6:05:b0
+root@s2:/home/djet# dmesg | tail
+[89628.171100] netconsole: local port 6969
+[89628.171103] netconsole: local IP 10.90.30.130
+[89628.171105] netconsole: interface eth0
+[89628.171107] netconsole: remote port 6969
+[89628.171108] netconsole: remote IP 10.90.30.129
+[89628.171110] netconsole: remote ethernet address 5c:f3:fc:b6:05:b0
+[89628.351538] console [netcon0] enabled
+[89628.351539] netconsole: network logging started
+```
+
+3. Запускаем nc на сервере где будем ловить логи
+```sh
+root@s1:/home/djet# nc -u -l -p 6969
+```
+
+###Узнать информацию о файле
+```sh
+# file /bin/ls
+```
+ 
+###Информация о бинарнике
+```sh
+# ldd  /bin/ls
+```
+
+###Вывести все ноды в puppet
+```sh
+puppet cert list --all
 ```
 
 
