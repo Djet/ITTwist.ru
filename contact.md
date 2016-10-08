@@ -59,13 +59,13 @@ description: About my
 <span class="label label-info">Zabbix</span><br>
 <span class="label label-info">nagios</span>
 <span class="label label-info">cacti</span>
-<span class="label label-info">OpenVAS</span><br>
+<span class="label label-info">OpenVAS</span>
 <span class="label label-info">OSSIM</span>
 <span class="label label-info">snort</span>
 <span class="label label-info">suricata</span>
 <span class="label label-info">OSSIM</span>
 <span class="label label-info">sqlmap</span>
 <span class="label label-info">w3af</span>
-<span class="label label-info">BIND9</span><
+<span class="label label-info">BIND9</span>
 <span class="label label-info">postfix</span>
 
