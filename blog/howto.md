@@ -1,6 +1,6 @@
 ---
 title: FAQ по командам Unix
-date: 07/10/16 18:14:20
+date: 07/10/12 18:14:20
 template: blog_post
 ---
 
