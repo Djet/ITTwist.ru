@@ -4,24 +4,26 @@ description: About my
 ---
 
 ## My Skills
-<span class="label label-success">Linux systems administrator</span><span class="label label-success">Linux</span>
-<span class="label label-success">High availability</span>
-<span class="label label-success">DevOps</span>
-<span class="label label-success">Puppet</span>
-<span class="label label-success">Bash</span>
-<span class="label label-success">Python</span>
-<span class="label label-success">Zabbix</span>
-<span class="label label-success">Docker</span>
-<span class="label label-success">Debian</span>
-<span class="label label-success">Ansible</span>
-<span class="label label-success">nagios</span>
-<span class="label label-success">Security audit</span>
-<span class="label label-success">VPN Administrator</span>
-<span class="label label-success">Postgres</span>
-<span class="label label-success">Mysql</span>
-<span class="label label-success">Network administrator</span>
-<span class="label label-success">SQL</span>
-<span class="label label-success">GIT</span>
-<span class="label label-success">Jenkins</span>
+<span class="label label-info">Linux systems administrator</span>
+<span class="label label-info">Linux</span>
+<span class="label label-info">High availability</span>
+<span class="label label-info">DevOps</span>
+<span class="label label-info">Puppet</span>
+<span class="label label-info">Bash</span>
+<span class="label label-info">Python</span>
+<span class="label label-info">Zabbix</span>
+<span class="label label-info">Docker</span>
+<span class="label label-info">Debian</span>
+<span class="label label-info">Ansible</span>
+<span class="label label-info">nagios</span>
+<span class="label label-info">Security audit</span>
+<span class="label label-info">VPN Administrator</span>
+<span class="label label-info">Postgres</span>
+<span class="label label-info">Mysql</span>
+<span class="label label-info">Network administrator</span>
+<span class="label label-info">SQL</span>
+<span class="label label-info">GIT</span>
+<span class="label label-info">Jenkins</span>
+
 
 
