@@ -77,25 +77,31 @@ GET /index.htm HTTP/1.1
 host: www.esqsoft.globalservers.com
 ```
 
+
 #### Скукожить повторяющиеся пробелы до одного пробела  (параметр sqeeeze у tr):
 ```sh
 ipmitool -I lanplus -H 91.143.6.178 -U ipmi -P w**** sensor | grep "Ambient Temp" | tr -s ' ' | cut -d' ' -f 4
 ```
+
 
 #### Узнать внешний ip адрес:
 ```sh
 wget -q -O - http://formyip.com/ | awk '/The/{print $5}'
 ```
 
+
 #### Скомпилить Cи программу с оптимизацией
 ```sh
 gcc exploit.c -O2 -o b.out
 ```
 
+
 #### Убрать точку в фразе с помощью sed. Использование шаблонов
 ```sh
 echo sddfdf.sdds | sed -r 's/(^.*)\.(.*)/\1/'
 ```
+
+
  
 
  
