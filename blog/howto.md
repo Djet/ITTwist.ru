@@ -342,6 +342,176 @@ mutt -s DUMP -a 127.0.0.1_900.pcap -- user@server.com
 #ssh-keygen -i -f ~/.ssh/id_dsa_1024_a.pub > ~/.ssh/id_dsa_1024_a_openssh.pub
 ```
 
+###Установка и подключение репозитория JAVA7:
+
+```sh
+echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" > /etc/apt/sources.list.d/webupd8team-java.list
+echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" >> /etc/apt/sources.list.d/webupd8team-java.list
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
+apt-get update
+apt-get install oracle-java7-installer
+```
+
+###Команда для переноса OpenVZ контейнеров:
+```sh
+DATE1=`date`;
+DIR="/var/lib/vz/private/10080/";
+/usr/bin/rsync --password-file=/usr/local/comcom/sync/rsync.passwd --whole-file -av rsync://root@a6/root/$DIR $DIR ; DATE2=`date`;
+echo "Start $DATE1           Stop $DATE2 "
+```
+
+###Добавление READ ONLY доступ к БД Postgres:
+
+1. заходим в нужную БД
+2. создаем роль CREATE ROLE <роль> LOGIN NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE PASSWORD '<пароль>';
+3. даем права на все таблицы схемы public - GRANT SELECT ON ALL TABLES IN SCHEMA public TO <роль>;
+Если нужны дополнительная права (исключения по обновлению или записи), смотрим здесь: http://www.postgresql.org/docs/9.1/interactive/sql-grant.html
+Удаление пользователя (для отзыва привилегий нужно зайти в соотв базу данных).
+```sh
+REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM test;
+DROP USER test;
+```
+
+###Список пользователей Postgres:
+```sh
+postgres=# \du
+```
+Вывод хеша пароля (нужно добавить в pg_bouncer для возможности работы через него)
+```sh
+postgres=# SELECT usename, passwd FROM pg_shadow;
+```
+
+###Добавление доступа к MySQL
+
+```sh
+CREATE USER "sp"@"%" IDENTIFIED BY '********';
+GRANT ALL PRIVILEGES ON databasename*.*\* TO "sp"@"%" IDENTIFIED BY '*\*******' WITH GRANT OPTION;
+```
+ 
+###Смена пароля у пользователя Mysql:
+
+```sh
+UPDATE user SET password=PASSWORD('password') where User='debian-sys-maint';
+flush privileges;
+```
+
+ 
+###Вывод пользователей для базы данных mysql с привилегией на запись:
+```sh
+select user, Insert_priv from mysql.user;
+```
+
+###Удаление пользователей:
+```sh
+delete from mysql.user WHERE User='tech';
+```
+
+##Изменить сетевое имя интерфейса и MTU:
+Меняем имя сетевого интерфейса
+```sh
+ip link set dev pan1 name pan0
+```
+
+###Меняем MTU
+```sh
+ip link set dev eth0 mtu 1480
+```
+
+###Управление MegaRAID:
+
+```sh
+MegaCli -PDList -aALL
+MegaCli -AdpEventLog -GetEvents -f events.log -aALL && cat events.log
+MegaCli -AdpBbuCmd -GetBbuStatus -aALL
+MegaCli -LDSetProp EnDskCache -LAll -aAll  - включить cache
+MegaCli -PDList -aAll | egrep "Enclosure Device ID:|Slot Number:|Inquiry Data:|Error Count:|state" ## Статусы HDD
+http://wiki.hetzner.de/index.php/LSI_RAID_Controller/ru
+```
+ 
+###Выход из сессии IP-SEC S-Terra
+
+Для выхода из сессии нажмите "Ctrl-Shift-6" затем
+клавишу "x". В появившемся промте IOS наберите команду
+"disconnect" и нажмите Enter.
+
+###Обновлять вывод команды с интервалом в одну десятую секунды
+```sh 
+watch --interval=0.1 ptest -Ls
+```
+
+###Удалить все маршруты через 172.16.0.254 ипишник используя xargs:
+```sh
+ip route | grep 172.16.0.254 | awk '{print $1}' | xargs -i ip route del {}
+```
+
+###Непонятная ошибка в выводе tshark:
+Вида: ENTTEC Unknown (0x000000cc).
+Tshark не может распознать трафик, нужно ему помочь вручную, например для smpp трафика:
+```sh
+tshark -ibond0 -f "host 91.213.5.2 and port 3333" -d tcp.port==3333,smpp
+```
+
+###Слушать на локалхосте сайт Яндекса 80 порт через машину a25:
++ С удаленного сервера
+```sh
+ssh -L 80:ya.ru:80 root@a25
+```
++ На удаленный сервер.
+```sh
+ssh -R 80:ya.ru:80 root@a25
+```
+
+###Изменение source и destination адресов у приходящего пакета:
+
+В данном случае сделать source равным destination, а destination - изменить на какой-то третий адрес.
+
+```sh
+*mangle
+-A PREROUTING -s 1.1.1.1 -d 2.2.2.2 -p tcp -m tcp --dport 22 -j MARK --set-mark 0x1
+*nat
+-A PREROUTING --match mark --mark 0x1 -j DNAT --to-destination 3.3.3.3
+-A POSTROUTING --match mark --mark 0x1 -j SNAT --to-source 2.2.2.2
+```
+
+###Установка последней java6/java7 на сервер:
+
+Воспользуемся oab скриптом (параметр -7 означает поставить java7):
+
+```sh
+root@trn4:~# wget https://github.com/flexiondotorg/oab-java6/archive/master.zip
+root@trn4:~# unzip master.zip
+root@trn4:~# cd oab-java6-master/
+root@trn4:~/oab-java6-master# ./oab-java.sh -7
+root@trn4:/# apt-get update
+root@trn4:/# apt-get install oracle-java7-jre
+root@trn4:/# sudo update-alternatives --config java
+There are 2 choices for the alternative java (providing /usr/bin/java).
+ 
+  Selection    Path                                      Priority   Status
+------------------------------------------------------------
+  0            /usr/lib/jvm/java-6-openjdk/jre/bin/java   1061      auto mode
+  1            /usr/lib/jvm/java-6-openjdk/jre/bin/java   1061      manual mode
+* 2            /usr/lib/jvm/java-7-oracle/jre/bin/java    53        manual mode
+ 
+Press enter to keep the current choice[*], or type selection number: 2
+```
+
+###Дамп/восстановление базы данных mysql
+
+Только схемы:
+```sh
+mysql> show create database smpp_router;
++-------------+----------------------------------------------------------------------+
+| Database    | Create Database                                                      |
++-------------+----------------------------------------------------------------------+
+| smpp_router | CREATE DATABASE `smpp_router` /*!40100 DEFAULT CHARACTER SET utf8 */ |
++-------------+----------------------------------------------------------------------+
+1 row in set (0.00 sec)
+ 
+root@java2:~# mysqldump -d smpp_router > ~/smpp_router_dump_19_03_2013_schema_only.sql
+root@java2:~# scp ~/smpp_router_dump_19_03_2013_schema_only.sql smstrn4.a1s:~/
+```
+
 
  
 
