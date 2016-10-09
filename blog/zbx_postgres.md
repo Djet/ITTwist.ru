@@ -23,16 +23,13 @@ Zabbix версии 2.2 или выше.
 # dpkg -i libzbxpgsql_1.0.0-1+trusty_amd64.deb
 # /etc/init.d/zabbix-agent restart
 ```
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h3 class="panel-title">Panel info</h3>
-  </div>
-  <div class="panel-body">
-    Если у вас не запустился агент и выдал ошибку в виде:
+
+Если у вас не запустился агент и выдал ошибку в виде:
 ```sh
   2785:20161009:083903.617 cannot load module "libzbxpgsql.so": /usr/lib/modules/libzbxpgsql.so: cannot open shared object file: No such file or directory
 ```
 то необходимо скопировать модуль libzbxpgsql.so в каталог /usr/lib/modules/
+
 ```sh
 # dpkg -l | grep libzbx
 # dpkg -L libzbxpgsql | grep so
@@ -40,9 +37,6 @@ Zabbix версии 2.2 или выше.
 # cp /usr/lib/zabbix/modules/libzbxpgsql.so /usr/lib/modules/
 # /etc/init.d/zabbix-agent restart
 ```
-
-  </div>
-</div>
 
 Так как в шаблоне используются Zabbix (Active check) необходмо настроить zabbix агент добавив в конфигурацию имя хоста и адрес сервера:
 ```sh
