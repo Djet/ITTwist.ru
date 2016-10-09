@@ -8,8 +8,6 @@ template: blog_post
 <!--more-->
 
 ###### Где взять: [http://cavaliercoder.com/libzbxpgsql/download/](http://cavaliercoder.com/libzbxpgsql/documentation/)
-###### Оф. сайт: 
-
 
 ##### Системные требования:
 PostgreSQL версии 8.4 или выше.
