@@ -23,7 +23,14 @@ Zabbix версии 2.2 или выше.
 # dpkg -i libzbxpgsql_1.0.0-1+trusty_amd64.deb
 # /etc/init.d/zabbix-agent restart
 ```
-
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Panel info</h3>
+  </div>
+  <div class="panel-body">
+    Panel content
+  </div>
+</div>
 Если у вас не запустился агент и выдал ошибку в виде:
 ```sh
   2785:20161009:083903.617 cannot load module "libzbxpgsql.so": /usr/lib/modules/libzbxpgsql.so: cannot open shared object file: No such file or directory
