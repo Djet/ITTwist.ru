@@ -25,9 +25,10 @@ Zabbix версии 2.2 или выше.
 ```
 
 Если у вас не запустился агент и выдал ошибку в виде:
+```sh
   2785:20161009:083903.617 cannot load module "libzbxpgsql.so": /usr/lib/modules/libzbxpgsql.so: cannot open shared object file: No such file or directory
 то необходимо скопировать модуль libzbxpgsql.so в каталог /usr/lib/modules/
-
+```
 ```sh
 # dpkg -l | grep libzbx
 # dpkg -L libzbxpgsql | grep so

@@ -1,6 +1,7 @@
 ---
 title: Welcome  
-description: ITTwsit main page 
+description: Welcome to ITTwist.ru 
 template: index  
 ---
-# Welcome  
+#Hi! 
+## You came to the personal page of Sergey Budnikov
