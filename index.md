@@ -7,6 +7,6 @@ template: index
 
 <div class="jumbotron">
   <h1>Hello!</h1>
-  <p aligth=center>You came to the personal page of Sergey Budnikov</p>
-  <p alight=center><a class="btn btn-primary btn-lg" >Learn more about my</a></p>
+  <p>You came to the personal page of Sergey Budnikov</p>
+  <p><a class="btn btn-primary btn-lg" >Learn more about my</a></p>
 </div>
